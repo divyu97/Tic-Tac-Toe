@@ -1,0 +1,170 @@
+@import url('https://fonts.cdnfonts.com/css/surprisedmonkey');
+
+body {
+    background-color: #091227;
+}
+
+.game-title {
+    font-family: "", Arial;
+    font-size: 50px;
+    text-align: center;
+    padding: 16px;
+    color: yellow;
+}
+
+.game-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+}
+
+.current-turn {
+    background-color: #46BCDE;
+    font-family: "", Arial;
+    font-size: 30px;
+    padding: 16px;
+    border-radius: 8px;
+    margin-right: 330px;
+}
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    background-color: bisque;
+    border-radius: 8px;
+}
+
+.game-cell[data-index="0"], .game-cell[data-index="3"], .game-cell[data-index="6"] {
+    border-width: 0px 4px 4px 0px;
+    border-style: solid solid solid solid;
+    border-color: grey grey grey grey;
+}
+
+.game-cell[data-index="1"], .game-cell[data-index="4"], .game-cell[data-index="7"] {
+    border-width: 0px 4px 4px 0px;
+    border-style: solid solid solid solid;
+    border-color: grey grey grey grey;
+}
+
+.game-cell[data-index="2"], .game-cell[data-index="5"], .game-cell[data-index="8"] {
+    border-width: 0px 0px 4px 0px;
+    border-style: solid solid solid solid;
+    border-color: grey grey grey grey;
+}
+
+.game-cell[data-index="6"], .game-cell[data-index="7"], .game-cell[data-index="8"] {
+    border-bottom: 0px;
+}
+
+.game-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid grey;
+    font-size: 7rem;
+    padding: 16px 32px 16px 32px;
+    cursor: pointer;
+}
+
+.game-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    padding: 20px;
+}
+
+.new-game, .reset-game {
+    font-family: "", Arial;
+    font-size: 25px;
+    padding: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+}
+
+.new-game {
+    background-color: rgb(77, 223, 167);
+}
+
+.reset-game {
+    background-color: red;
+    color: white;
+}
+
+dialog[open] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; 
+    gap: 32px;
+    font-size: 40px;
+    font-family: "", Arial;
+    background-color: #3b3c6e;
+    color: white;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
+dialog div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-direction: row;
+}
+
+.dialog-buttons button {
+    font-size: 30px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    font-family: "", Arial;
+    cursor: pointer;
+}
+
+dialog div input {
+    font-size: 30px;
+    border: none;
+    background-color: beige;
+    border-radius: 5px;
+    font-family: "", Arial;
+    padding: 8px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+dialog div input:focus {
+    border: 2px solid rgb(253, 144, 2);
+    outline: none;
+}
+
+.start-game {
+    background-color: green;
+    color: white;
+}
+
+.close-dialog {
+    background-color: red;
+    color: white;
+}
