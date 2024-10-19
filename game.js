@@ -1,5 +1,6 @@
 const dialog = document.querySelector("dialog");
 const cells = document.querySelectorAll(".game-cell");
+const currentTurn = document.querySelector(".current-turn");
 document.querySelector(".game-board").setAttribute("style", "color: bisque");
 
 document.querySelector(".new-game").addEventListener("click", () => dialog.showModal());
@@ -7,6 +8,14 @@ document.querySelector(".close-dialog").addEventListener("click", () => {
     dialog.close();
     document.querySelector("#player-1").value = "";
     document.querySelector("#player-2").value = "";
+});
+
+document.querySelector(".reset-game").addEventListener("click", function() {
+    displayController.reset();
+    displayController.show();
+    currentTurn.innerHTML = "Current Turn: ";
+    document.querySelector('.game-cell[data-index="0"]').innerHTML = "✖";
+    document.querySelector('.game-cell[data-index="1"]').innerHTML = "◯";
 });
 
 const gameBoard = (function() {
@@ -19,14 +28,18 @@ const gameBoard = (function() {
 })();
 
 const displayController = (function() {
-    let currentTurn = document.querySelector(".current-turn");
     let show = function() {
         cells.forEach((cell) => cell.innerHTML = gameBoard.gameboard[Number(cell.getAttribute("data-index"))]);
         currentTurn.innerHTML = `Current Turn: ${gameBoard.currentTurn} (${gameBoard.currentChoice})`;
     };
     let reset = function() {
-        cells.forEach((cell) => cell.innerHTML = "");
-        currentTurn.setAttribute("style", "display: none");
+        cells.forEach((cell) => {
+            gameBoard.gameboard[Number(cell.getAttribute("data-index"))] = "";
+            cell.setAttribute("style", "color: bisque");
+        });
+        document.querySelector(".game-info").setAttribute("style", "display: none");
+        document.querySelector(".reset-game").setAttribute("style", "display: none");
+        document.querySelector(".new-game").setAttribute("style", "display: inline");
     };
     return {show, reset};
 })();
@@ -58,7 +71,7 @@ document.querySelector(".start-game").addEventListener("click", () => {
                     cell.setAttribute("style", "color: black");
                     displayController.show();
                 }
-            });
+            }, {once: true});
         });
     }
 });
