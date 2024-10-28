@@ -3,6 +3,14 @@ const cells = document.querySelectorAll(".game-cell");
 const currentTurn = document.querySelector(".current-turn");
 document.querySelector(".game-board").setAttribute("style", "color: bisque");
 
+dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) {
+        dialog.close();
+        document.querySelector("#player-1").value = "";
+        document.querySelector("#player-2").value = "";
+    }
+});
+
 document.querySelector(".new-game").addEventListener("click", () => dialog.showModal());
 document.querySelector(".close-dialog").addEventListener("click", () => {
     dialog.close();
@@ -10,13 +18,15 @@ document.querySelector(".close-dialog").addEventListener("click", () => {
     document.querySelector("#player-2").value = "";
 });
 
-document.querySelector(".reset-game").addEventListener("click", function() {
+function actualReset() {
     displayController.reset();
     displayController.show();
     currentTurn.innerHTML = "Current Turn: ";
     document.querySelector('.game-cell[data-index="0"]').innerHTML = "✖";
     document.querySelector('.game-cell[data-index="1"]').innerHTML = "◯";
-});
+}
+
+document.querySelector(".reset-game").addEventListener("click", actualReset);
 
 const gameBoard = (function() {
     const gameboard = ["", "", "", "", "", "", "", "", ""];
@@ -24,7 +34,34 @@ const gameBoard = (function() {
     let player2 = "";
     let currentTurn = "";
     let currentChoice = "";
-    return {gameboard, player1, player2, currentTurn, currentChoice};
+    let checkWinner = function() {
+        if ((gameBoard.gameboard[0] === "✖" && gameBoard.gameboard[1] === "✖" && gameBoard.gameboard[2] === "✖") || (gameBoard.gameboard[2] === "✖" && gameBoard.gameboard[5] === "✖" && gameBoard.gameboard[8] === "✖") || (gameBoard.gameboard[8] === "✖" && gameBoard.gameboard[7] === "✖" && gameBoard.gameboard[6] === "✖") || (gameBoard.gameboard[6] === "✖" && gameBoard.gameboard[3] === "✖" && gameBoard.gameboard[0] === "✖") || (gameBoard.gameboard[3] === "✖" && gameBoard.gameboard[4] === "✖" && gameBoard.gameboard[5] === "✖") || (gameBoard.gameboard[1] === "✖" && gameBoard.gameboard[4] === "✖" && gameBoard.gameboard[7] === "✖")) {
+            alert(`${this.player1} won!`);
+            actualReset();
+        }
+        else if ((gameBoard.gameboard[0] === "◯" && gameBoard.gameboard[1] === "◯" && gameBoard.gameboard[2] === "◯") || (gameBoard.gameboard[2] === "◯" && gameBoard.gameboard[5] === "◯" && gameBoard.gameboard[8] === "◯") || (gameBoard.gameboard[8] === "◯" && gameBoard.gameboard[7] === "◯" && gameBoard.gameboard[6] === "◯") || (gameBoard.gameboard[6] === "◯" && gameBoard.gameboard[3] === "◯" && gameBoard.gameboard[0] === "◯") || (gameBoard.gameboard[3] === "◯" && gameBoard.gameboard[4] === "◯" && gameBoard.gameboard[5] === "◯") || (gameBoard.gameboard[1] === "◯" && gameBoard.gameboard[4] === "◯" && gameBoard.gameboard[7] === "◯")) {
+            alert(`${this.player2} won!`);
+            actualReset();
+        }
+        else if ((gameBoard.gameboard[0] === "✖" && gameBoard.gameboard[4] === "✖" && gameBoard.gameboard[8] === "✖") || (gameBoard.gameboard[2] === "✖" && gameBoard.gameboard[4] === "✖" && gameBoard.gameboard[6] === "✖")) {
+            alert(`${this.player1} won!`);
+            actualReset();
+        }
+        else if ((gameBoard.gameboard[0] === "◯" && gameBoard.gameboard[4] === "◯" && gameBoard.gameboard[8] === "◯") || (gameBoard.gameboard[2] === "◯" && gameBoard.gameboard[4] === "◯" && gameBoard.gameboard[6] === "◯")) {
+            alert(`${this.player2} won!`);
+            actualReset();
+        } else {
+            for (let i = 0; i < 9; i++) {
+                if (gameBoard.gameboard[i] === "")
+                    break;
+                else if (gameBoard.gameboard[i] !== "" && i == 8) {
+                    alert("It's a tie!");
+                    actualReset();
+                }
+            }
+        }
+    }
+    return {gameboard, player1, player2, currentTurn, currentChoice, checkWinner};
 })();
 
 const displayController = (function() {
@@ -70,6 +107,7 @@ document.querySelector(".start-game").addEventListener("click", () => {
                     gameBoard.currentChoice = (gameBoard.currentChoice === "✖")?"◯":"✖";
                     cell.setAttribute("style", "color: black");
                     displayController.show();
+                    gameBoard.checkWinner();
                 }
             }, {once: true});
         });
