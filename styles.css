@@ -109,6 +109,7 @@ dialog[open] {
     right: 0;
     bottom: 0;
     border: none;
+    padding: 0;
     border-radius: 10px;
     display: flex;
     flex-direction: column; 
@@ -119,11 +120,21 @@ dialog[open] {
     color: white;
 }
 
+.dialog-content {
+    padding: 40px;
+}
+
 dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.65);
 }
 
-dialog div {
+dialog>div {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+dialog div div {
     display: flex;
     flex-direction: column;
     gap: 8px;
